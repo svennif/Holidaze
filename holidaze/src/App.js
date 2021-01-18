@@ -1,11 +1,9 @@
-import './scss/App.scss';
+import Nav from "./Components/Navbar/Navbar";
+import "./scss/App.scss";
+
 
 function App() {
-  return (
-    <>
-    <h1>Hello World!</h1>
-    </>
-  );
+  return <Nav />;
 }
 
 export default App;
