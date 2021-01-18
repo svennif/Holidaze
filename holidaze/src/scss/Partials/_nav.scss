@@ -1,9 +1,28 @@
 @import "./custom";
 
-.navbar-brand {
+.navbar-light .navbar-brand {
+  color: $main-text;
+  font-family: $heading-font;
+  font-size: 50pt;
+  font-weight: bold;
+  line-height: 60pt;
+}
+
+.navbar-light .navbar-brand:hover {
   color: $main-text;
 }
 
 .navbar {
   background-color: $main-colour;
+}
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+  color: $main-text;
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: $main-text;
+  font-size: 28px;
 }

@@ -1,5 +1,4 @@
-
-import Nav from "./Components/Navbar/Navbar";
+import Nav from "./Components/Navbar/Header";
 import "./scss/App.scss";
 
 
