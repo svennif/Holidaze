@@ -1,25 +1,30 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import Container from "react-bootstrap/Container";
 
 function Header() {
   return (
-    <Navbar collapseOnSelect expand="lg">
-        <Navbar.Brand className="ml-5" href="#home">Holidaze</Navbar.Brand>
+    <Navbar variant="dark" bg="dark" collapseOnSelect expand="lg">
+      <Container>
+        <Navbar.Brand href="#" className="navbar-title">
+          Holidaze
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="ml-auto mr-5" activeKey="/home">
+          <Nav className="ml-auto ">
             <Nav.Item>
-              <Nav.Link href="/home">Active</Nav.Link>
+              <Nav.Link href="/home">Browse hotels</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="link-1">Link</Nav.Link>
+              <Nav.Link eventKey="link-1">Contact</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-              <Nav.Link eventKey="link-2">Link</Nav.Link>
+              <Nav.Link eventKey="link-2">Admin</Nav.Link>
             </Nav.Item>
           </Nav>
         </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }

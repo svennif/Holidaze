@@ -1,0 +1,21 @@
+// custom
+@import url("https://use.typekit.net/uuz7xpt.css");
+
+$main-colour: #365953;
+$main-text: #ccd9d7;
+$secondary-text: #7a8b88;
+$main-heading-font: quasimoda, sans-serif;
+$main-font: houschka-pro, sans-serif;
+
+// bootstrap
+$theme-colors: (
+  "primary": $main-colour,
+  "dark": $main-colour,
+);
+
+$font-family-base: $main-font;
+$headings-font-family: $main-heading-font;
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "./partials/nav";
