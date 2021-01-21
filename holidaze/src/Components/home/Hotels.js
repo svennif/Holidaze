@@ -1,5 +1,5 @@
 import React from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../constants";
+import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 
 function Hotels() {
   const establishmentsUrl = BASE_URL + "establishments";
