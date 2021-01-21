@@ -1,27 +1,28 @@
 import React from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
+import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 
 function Header() {
   return (
     <Navbar variant="dark" bg="dark" collapseOnSelect expand="lg">
       <Container>
-        <Navbar.Brand href="#" className="navbar-title">
-          Holidaze
-        </Navbar.Brand>
+        <NavLink to="/" exact>
+          <Navbar.Brand className="navbar-title">Holidaze</Navbar.Brand>
+        </NavLink>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto ">
-            <Nav.Item>
-              <Nav.Link href="/home">Browse hotels</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-1">Contact</Nav.Link>
-            </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="link-2">Admin</Nav.Link>
-            </Nav.Item>
+            <NavLink id="home" to="/" exact className="nav-link">
+              Home
+            </NavLink>
+            <NavLink id="contact" to="/contact" className="nav-link">
+              Contact
+            </NavLink>
+            <NavLink id="admin" to="/admin" className="nav-link">
+              Contact
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
