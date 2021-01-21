@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import BASE_URL from "../constants";
+import BASE_URL from "../../constants";
 import {Typeahead, Highlighter, Menu, MenuItem} from "react-bootstrap-typeahead";
 
 const URL = BASE_URL;

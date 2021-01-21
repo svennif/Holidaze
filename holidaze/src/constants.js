@@ -7,14 +7,3 @@ const FETCH_OPTIONS = {
     key: KEY,
   },
 };
-
-const establishmentsUrl = BASE_URL + "establishments";
-
-fetch(establishmentsUrl, FETCH_OPTIONS)
-  .then(function (response) {
-    console.log(response);
-    return response.json();
-  })
-  .then(function (json) {
-    console.log(json);
-  });
