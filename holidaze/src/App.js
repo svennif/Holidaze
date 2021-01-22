@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./Components/Navbar/Header";
 import Home from "./Components/home/Home";
-import Hotels from "./Components/home/Hotels";
+import Hotels from "./Components/hotels/Hotels";
 import Admin from "./Components/admin/Admin";
 import Contact from "./Components/contact/Contact";
 
