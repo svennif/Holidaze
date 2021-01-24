@@ -49,16 +49,7 @@ function Home() {
   return (
     <>
       <Container>
-        <HotelSearch handleHotelSearch={filterHotels} />
-        {filteredHotel.map(({ image, id, name, description }) => (
-          <Hotels
-            key={id}
-            id={id}
-            name={name}
-            image={image}
-            description={description}
-          />
-        ))}
+        <HotelSearch />
       </Container>
     </>
   );
