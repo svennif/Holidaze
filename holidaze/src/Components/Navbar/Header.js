@@ -24,7 +24,7 @@ function Header() {
               Contact
             </NavLink>
             <NavLink id="admin" to="/admin" className="nav-link">
-              Contact
+              Admin
             </NavLink>
           </Nav>
         </Navbar.Collapse>

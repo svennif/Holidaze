@@ -4,6 +4,7 @@ import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
 import HotelSearch from "../hotels/HotelSearch";
 import Hotels from "../hotels/Hotels";
+import EnquiryModal from "../home/EnquiryModal";
 
 function Home() {
   const [hotel, setHotel] = useState([]);
@@ -49,7 +50,17 @@ function Home() {
   return (
     <>
       <Container>
-        <HotelSearch />
+        <EnquiryModal />
+        <HotelSearch handleHotelSearch={filterHotels} />
+        {filteredHotel.map(({ image, id, name, description }) => (
+          <Hotels
+            key={id}
+            id={id}
+            name={name}
+            image={image}
+            description={description}
+          />
+        ))}
       </Container>
     </>
   );
