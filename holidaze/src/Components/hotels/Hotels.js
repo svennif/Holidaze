@@ -1,6 +1,4 @@
 import React from "react";
-//import { BASE_URL, FETCH_OPTIONS } from "../../Api";
-//import HotelSearch from "./HotelSearch";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
