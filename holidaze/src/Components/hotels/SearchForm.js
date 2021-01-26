@@ -10,9 +10,9 @@ function SearchForm({ handleSearch }) {
     console.log('Success');
   }
   return (
-    <InputGroup size="lg" className="search vw-50 my-2">
+    <InputGroup size="lg" className="search vw-50 my-3">
       <FormControl
-        placeholder="Search for a game"
+        placeholder="Search for a hotel..."
         onChange={(e) => handleSearch(e)}
         onClick={myFunction()}
       />
