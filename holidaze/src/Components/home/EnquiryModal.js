@@ -25,10 +25,10 @@ function EnquiryModal() {
         </Modal.Header>
         <Modal.Body>
           <Form>
-              <FormGroup>
-                  <FormLabel>Name</FormLabel>
-                  <FormControl type="text" placeholder="Name... "></FormControl>
-              </FormGroup>
+            <FormGroup>
+              <FormLabel>Name</FormLabel>
+              <FormControl type="text" placeholder="Name... "></FormControl>
+            </FormGroup>
           </Form>
         </Modal.Body>
         <Modal.Footer>

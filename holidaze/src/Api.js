@@ -10,3 +10,7 @@ export const FETCH_OPTIONS = {
 
 export const PATCH = "PATCH";
 export const DELETE = "DELETE";
+
+// Hotels = "establishments"
+// Enquieries = "enquiries"
+// Contacts = "contacts"
