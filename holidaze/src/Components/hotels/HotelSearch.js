@@ -1,137 +1,59 @@
-import React from "react";
-import Autosuggest from "react-autosuggest";
+import React, { useEffect, useState } from "react";
+import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import Container from "react-bootstrap/Container";
+import SearchForm from "../hotels/SearchForm";
+import Hotels from "../hotels/Hotels";
+import Spinner from "react-bootstrap/Spinner";
 
-const languages = [
-  {
-    name: "C",
-    year: 1972,
-  },
-  {
-    name: "C#",
-    year: 2000,
-  },
-  {
-    name: "C++",
-    year: 1983,
-  },
-  {
-    name: "Clojure",
-    year: 2007,
-  },
-  {
-    name: "Elm",
-    year: 2012,
-  },
-  {
-    name: "Go",
-    year: 2009,
-  },
-  {
-    name: "Haskell",
-    year: 1990,
-  },
-  {
-    name: "Java",
-    year: 1995,
-  },
-  {
-    name: "Javascript",
-    year: 1995,
-  },
-  {
-    name: "Perl",
-    year: 1987,
-  },
-  {
-    name: "PHP",
-    year: 1995,
-  },
-  {
-    name: "Python",
-    year: 1991,
-  },
-  {
-    name: "Ruby",
-    year: 1995,
-  },
-  {
-    name: "Scala",
-    year: 2003,
-  },
-];
+function HotelSearch() {
+  const [hotel, setHotel] = useState([]);
+  const [filteredHotel, setFilteredHotel] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
-function escapeRegexCharacters(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+  useEffect(() => {
+    const url = BASE_URL + "establishments";
+    fetch(url, FETCH_OPTIONS)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        setHotel(json);
+        setFilteredHotel(json);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, []);
 
-function getSuggestions(value) {
-  const escapedValue = escapeRegexCharacters(value.trim());
+  const filterHotel = function (e) {
+    const serachValue = e.target.value.toLowerCase();
 
-  if (escapedValue === "") {
-    return [];
-  }
-
-  const regex = new RegExp("^" + escapedValue, "i");
-
-  return languages.filter((language) => regex.test(language.name));
-}
-
-function getSuggestionValue(suggestion) {
-  return suggestion.name;
-}
-
-function renderSuggestion(suggestion) {
-  return <span>{suggestion.name}</span>;
-}
-
-class HotelSearch extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      value: "",
-      suggestions: [],
-    };
-  }
-
-  onChange = (event, { newValue, method }) => {
-    this.setState({
-      value: newValue,
+    const filterArray = hotel.filter(function (char) {
+      const lowerCaseHotel = char.name.toLowerCase();
+      if (lowerCaseHotel.includes(serachValue)) {
+        return true;
+      }
+      return false;
     });
+
+    setFilteredHotel(filterArray);
   };
 
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value),
-    });
-  };
-
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: [],
-    });
-  };
-
-  render() {
-    const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: "Search... ",
-      value,
-      onChange: this.onChange,
-    };
-
+  if (loading) {
     return (
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-      />
+      <Container id="SpinnerContainer">
+        <Spinner animation="border" id="spinner">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
     );
   }
+  return (
+    <Container>
+      <SearchForm handleSearch={filterHotel} />
+      {filteredHotel.map(({ id, name, image, description }) => (
+        <Hotels key={id} name={name} image={image} description={description} />
+      ))}
+    </Container>
+  );
 }
 
 export default HotelSearch;
