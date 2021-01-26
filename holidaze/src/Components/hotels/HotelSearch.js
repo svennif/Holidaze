@@ -1,90 +1,137 @@
-import React, { useEffect, useState, useRef } from "react";
-import { BASE_URL } from "../../Api";
+import React from "react";
+import Autosuggest from "react-autosuggest";
 
-const Auto = () => {
-  const [display, setDisplay] = useState(false);
-  const [options, setOptions] = useState([]);
-  const [search, setSearch] = useState("");
-  const wrapperRef = useRef(null);
+const languages = [
+  {
+    name: "C",
+    year: 1972,
+  },
+  {
+    name: "C#",
+    year: 2000,
+  },
+  {
+    name: "C++",
+    year: 1983,
+  },
+  {
+    name: "Clojure",
+    year: 2007,
+  },
+  {
+    name: "Elm",
+    year: 2012,
+  },
+  {
+    name: "Go",
+    year: 2009,
+  },
+  {
+    name: "Haskell",
+    year: 1990,
+  },
+  {
+    name: "Java",
+    year: 1995,
+  },
+  {
+    name: "Javascript",
+    year: 1995,
+  },
+  {
+    name: "Perl",
+    year: 1987,
+  },
+  {
+    name: "PHP",
+    year: 1995,
+  },
+  {
+    name: "Python",
+    year: 1991,
+  },
+  {
+    name: "Ruby",
+    year: 1995,
+  },
+  {
+    name: "Scala",
+    year: 2003,
+  },
+];
 
-  useEffect(() => {
-    const pokemon = [];
-    const promises = new Array(20)
-      .fill()
-      .map((v, i) => fetch(BASE_URL + "establishments"));
-    Promise.all(promises).then((pokemonArr) => {
-      return pokemonArr.map((value) =>
-        value
-          .json()
-          .then(({ name, sprites: { front_default: sprite } }) =>
-            pokemon.push({ name, sprite })
-          )
-      );
-    });
-    setOptions(pokemon);
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      window.removeEventListener("mousedown", handleClickOutside);
-    };
-  });
-
-  const handleClickOutside = (event) => {
-    const { current: wrap } = wrapperRef;
-    if (wrap && !wrap.contains(event.target)) {
-      setDisplay(false);
-    }
-  };
-
-  const updatePokeDex = (poke) => {
-    setSearch(poke);
-    setDisplay(false);
-  };
-
-  return (
-    <div ref={wrapperRef} className="flex-container flex-column pos-rel">
-      <input
-        id="auto"
-        onClick={() => setDisplay(!display)}
-        placeholder="Type to search"
-        value={search}
-        onChange={(event) => setSearch(event.target.value)}
-      />
-      {display && (
-        <div className="autoContainer">
-          {options
-            .filter(({ name }) => name.indexOf(search.toLowerCase()) > -1)
-            .map((value, i) => {
-              return (
-                <div
-                  onClick={() => updatePokeDex(value.name)}
-                  className="option"
-                  key={i}
-                  tabIndex="0"
-                >
-                  <span>{value.name}</span>
-                  <img src={value.sprite} alt="pokemon" />
-                </div>
-              );
-            })}
-        </div>
-      )}
-    </div>
-  );
-};
-
-function App() {
-  return (
-    <div className="App">
-      <h1>Custom AutoComplete React</h1>
-      <div className="logo"></div>
-      <div className="auto-container">
-        <Auto />
-      </div>
-    </div>
-  );
+// https://developer.mozilla.org/en/docs/Web/JavaScript/Guide/Regular_Expressions#Using_Special_Characters
+function escapeRegexCharacters(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-export default App;
+function getSuggestions(value) {
+  const escapedValue = escapeRegexCharacters(value.trim());
+
+  if (escapedValue === "") {
+    return [];
+  }
+
+  const regex = new RegExp("^" + escapedValue, "i");
+
+  return languages.filter((language) => regex.test(language.name));
+}
+
+function getSuggestionValue(suggestion) {
+  return suggestion.name;
+}
+
+function renderSuggestion(suggestion) {
+  return <span>{suggestion.name}</span>;
+}
+
+class HotelSearch extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      value: "",
+      suggestions: [],
+    };
+  }
+
+  onChange = (event, { newValue, method }) => {
+    this.setState({
+      value: newValue,
+    });
+  };
+
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value),
+    });
+  };
+
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: [],
+    });
+  };
+
+  render() {
+    const { value, suggestions } = this.state;
+    const inputProps = {
+      placeholder: "Search... ",
+      value,
+      onChange: this.onChange,
+    };
+
+    return (
+      <Autosuggest
+        suggestions={suggestions}
+        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
+        inputProps={inputProps}
+      />
+    );
+  }
+}
+
+export default HotelSearch;
