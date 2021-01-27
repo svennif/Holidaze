@@ -4,13 +4,11 @@ import Container from "react-bootstrap/Container";
 import SearchForm from "../hotels/SearchForm";
 import Hotels from "../hotels/Hotels";
 import Spinner from "react-bootstrap/Spinner";
-import Typeahead from "./Typeahead";
 
 function HotelSearch() {
   const [hotel, setHotel] = useState([]);
   const [filteredHotel, setFilteredHotel] = useState([]);
   const [loading, setLoading] = useState(true);
-  //const [display, setDisplay] = useState(false);
 
   useEffect(() => {
     const url = BASE_URL + "establishments";
@@ -27,7 +25,7 @@ function HotelSearch() {
 
   const filterHotel = function (e) {
     const serachValue = e.target.value.toLowerCase();
-
+    //
     const filterArray = hotel.filter(function (char) {
       const lowerCaseHotel = char.name.toLowerCase();
       if (lowerCaseHotel.includes(serachValue)) {
