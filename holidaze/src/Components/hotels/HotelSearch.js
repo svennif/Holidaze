@@ -4,11 +4,14 @@ import Container from "react-bootstrap/Container";
 import SearchForm from "../hotels/SearchForm";
 import Hotels from "../hotels/Hotels";
 import Spinner from "react-bootstrap/Spinner";
+import Typeahead from "./Typeahead";
 
 function HotelSearch() {
   const [hotel, setHotel] = useState([]);
   const [filteredHotel, setFilteredHotel] = useState([]);
+  const [showDisplay, setShowDisplay] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [display, setDisplay] = useState(false);
 
   useEffect(() => {
     const url = BASE_URL + "establishments";
@@ -25,7 +28,7 @@ function HotelSearch() {
 
   const filterHotel = function (e) {
     const serachValue = e.target.value.toLowerCase();
-    //
+
     const filterArray = hotel.filter(function (char) {
       const lowerCaseHotel = char.name.toLowerCase();
       if (lowerCaseHotel.includes(serachValue)) {
@@ -33,8 +36,20 @@ function HotelSearch() {
       }
       return false;
     });
-
     setFilteredHotel(filterArray);
+  };
+
+  const filterSuggestion = function (e) {
+    const serachValue = e.target.value.toLowerCase();
+
+    const suggestionArray = hotel.filter(function (char) {
+      const lowerCaseHotel = char.name.toLowerCase();
+      if (lowerCaseHotel.includes(serachValue)) {
+        return setDisplay(true);
+      }
+      return setDisplay(false);
+    });
+    setShowDisplay(suggestionArray);
   };
 
   if (loading) {
@@ -49,10 +64,11 @@ function HotelSearch() {
 
   return (
     <Container>
-      <SearchForm handleSearch={filterHotel} />
-      {filteredHotel.map(({ id, name, image, description }) => (
-        <Hotels key={id} name={name} image={image} description={description} />
-      ))}
+      <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
+      {filteredHotel.map(
+        ({ id, name, image }) =>
+          display && <Typeahead key={id} name={name} image={image} />
+      )}
     </Container>
   );
 }
