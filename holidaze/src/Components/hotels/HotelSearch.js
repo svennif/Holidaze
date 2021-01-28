@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 import Container from "react-bootstrap/Container";
 import SearchForm from "../hotels/SearchForm";
-import Hotels from "../hotels/Hotels";
 import Spinner from "react-bootstrap/Spinner";
 import Typeahead from "./Typeahead";
 
