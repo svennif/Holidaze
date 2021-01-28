@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 import Container from "react-bootstrap/Container";
 import SearchForm from "../hotels/SearchForm";
@@ -11,13 +11,14 @@ function HotelSearch() {
   const [showDisplay, setShowDisplay] = useState([]);
   const [loading, setLoading] = useState(true);
   const [display, setDisplay] = useState(false);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const url = BASE_URL + "establishments";
     fetch(url, FETCH_OPTIONS)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        console.log(json[0].id);
         setHotel(json);
         setFilteredHotel(json);
       })
@@ -51,6 +52,20 @@ function HotelSearch() {
     setShowDisplay(suggestionArray);
   };
 
+  useEffect(() => {
+    window.addEventListener("mousedown", clickOutside);
+    return () => {
+      window.removeEventListener("mousedown", clickOutside);
+    };
+  });
+
+  const clickOutside = (event) => {
+    const { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplay(false);
+    }
+  };
+
   if (loading) {
     return (
       <Container id="SpinnerContainer">
@@ -62,7 +77,7 @@ function HotelSearch() {
   }
 
   return (
-    <Container>
+    <Container ref={wrapperRef}>
       <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
       {filteredHotel.map(
         ({ id, name, image }) =>
