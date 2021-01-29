@@ -7,7 +7,6 @@ function Hotels({ image, id, name, description }) {
   return (
     <Card bg="primary" text="white" className="my-3">
       <Card.Img src={image} alt={name} />
-      <Card.Header>Header</Card.Header>
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>{description}</Card.Text>

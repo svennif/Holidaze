@@ -1,105 +1,89 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
-import Autosuggest from "react-autosuggest";
-
-async function hotelArr() {
-  const url = BASE_URL + "establishments";
-  const res = await fetch(url, FETCH_OPTIONS);
-  const data = await res.json();
-
-  hotelSuggestion(data);
-}
-
-function hotelSuggestion(data) {
-  console.log(data);
-  for (let i = 0; i < data.length; i++) {
-    const getSuggestions = (value) => {
-      const inputValue = value.trim().toLowerCase();
-      const inputLength = inputValue.length;
-
-      return inputLength === 0
-        ? []
-        : data.filter(
-            (lang) =>
-              lang.name.toLowerCase().slice(0, inputLength) === inputValue
-          );
-    };
-
-    // When suggestion is clicked, Autosuggest needs to populate the input
-    // based on the clicked suggestion. Teach Autosuggest how to calculate the
-    // input value for every given suggestion.
-    const getSuggestionValue = (suggestion) => suggestion.name;
-
-    // Use your imagination to render suggestions.
-    const renderSuggestion = (suggestion) => <div>{suggestion.name}</div>;
-
-    class HotelSearch extends React.Component {
-      constructor() {
-        super();
-
-        // Autosuggest is a controlled component.
-        // This means that you need to provide an input value
-        // and an onChange handler that updates this value (see below).
-        // Suggestions also need to be provided to the Autosuggest,
-        // and they are initially empty because the Autosuggest is closed.
-        this.state = {
-          value: "",
-          suggestions: [],
-        };
-      }
-
-      onChange = (event, { newValue }) => {
-        this.setState({
-          value: newValue,
-        });
-      };
-
-      // Autosuggest will call this function every time you need to update suggestions.
-      // You already implemented this logic above, so just use it.
-      onSuggestionsFetchRequested = ({ value }) => {
-        this.setState({
-          suggestions: getSuggestions(value),
-        });
-      };
-
-      // Autosuggest will call this function every time you need to clear suggestions.
-      onSuggestionsClearRequested = () => {
-        this.setState({
-          suggestions: [],
-        });
-      };
-
-      render() {
-        const { value, suggestions } = this.state;
-
-        // Autosuggest will pass through all these props to the input.
-        const inputProps = {
-          placeholder: "Type a programming language",
-          value,
-          onChange: this.onChange,
-        };
-
-        // Finally, render it!
-        return (
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            inputProps={inputProps}
-          />
-        );
-      }
-    }
-  }
-}
+import Container from "react-bootstrap/Container";
+import SearchForm from "../hotels/SearchForm";
+import Spinner from "react-bootstrap/Spinner";
+import Typeahead from "./Typeahead";
 
 function HotelSearch() {
+  const [hotel, setHotel] = useState([]);
+  const [filteredHotel, setFilteredHotel] = useState([]);
+  const [showDisplay, setShowDisplay] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [display, setDisplay] = useState(false);
+  const wrapperRef = useRef(null);
+
+  useEffect(() => {
+    const url = BASE_URL + "establishments";
+    fetch(url, FETCH_OPTIONS)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json[0].id);
+        setHotel(json);
+        setFilteredHotel(json);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filterHotel = function (e) {
+    const serachValue = e.target.value.toLowerCase();
+
+    const filterArray = hotel.filter(function (char) {
+      const lowerCaseHotel = char.name.toLowerCase();
+      if (lowerCaseHotel.includes(serachValue)) {
+        return true;
+      }
+      return false;
+    });
+    setFilteredHotel(filterArray);
+  };
+
+  const filterSuggestion = function (e) {
+    const serachValue = e.target.value.toLowerCase();
+
+    const suggestionArray = hotel.filter(function (char) {
+      const lowerCaseHotel = char.name.toLowerCase();
+      if (lowerCaseHotel.includes(serachValue)) {
+        return setDisplay(true);
+      }
+      return setDisplay(false);
+    });
+    setShowDisplay(suggestionArray);
+  };
+
+  useEffect(() => {
+    window.addEventListener("mousedown", clickOutside);
+    return () => {
+      window.removeEventListener("mousedown", clickOutside);
+    };
+  });
+
+  const clickOutside = (event) => {
+    const { current: wrap } = wrapperRef;
+    if (wrap && !wrap.contains(event.target)) {
+      setDisplay(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <Container id="SpinnerContainer">
+        <Spinner animation="border" id="spinner">
+          <span className="sr-only">Loading...</span>
+        </Spinner>
+      </Container>
+    );
+  }
+
   return (
-    <div>
-      <hotelArr />
-    </div>
+    <Container ref={wrapperRef}>
+      <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
+      {filteredHotel.map(
+        ({ id, name, image }) =>
+          display && <Typeahead key={id} name={name} image={image} />
+      )}
+    </Container>
   );
 }
 

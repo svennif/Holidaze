@@ -10,6 +10,7 @@ $main-font: houschka-pro, sans-serif;
 // bootstrap
 $theme-colors: (
   "primary": $main-colour,
+  "secondary": $secondary-text,
   "dark": $main-colour,
 );
 
@@ -20,4 +21,4 @@ $headings-font-family: $main-heading-font;
 
 @import "./partials/nav";
 @import "./partials/search";
-@import "./partials/enquiry.scss"
+@import "./partials/enquiry.scss";
