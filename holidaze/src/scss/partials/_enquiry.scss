@@ -4,3 +4,11 @@
   bottom: 3.125rem;
   padding: 15px;
 }
+
+@media screen and (max-width: 767px) {
+  .enquiryModal {
+    position: relative;
+    right: 0;
+    bottom: 0;
+  }
+}

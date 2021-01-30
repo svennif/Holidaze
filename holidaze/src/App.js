@@ -13,6 +13,7 @@ function App() {
       <Header />
       <Switch>
         <Route path="/hotels" exact component={Hotels} />
+        <Route path="/hotels/:id" exact component={Hotels} />
         <Route path="/admin" exact component={Admin} />
         <Route path="/contact" component={Contact} />
         <Route path="/" exact component={Home} />

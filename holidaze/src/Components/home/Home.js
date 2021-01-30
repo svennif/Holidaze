@@ -7,8 +7,10 @@ function Home() {
   return (
     <>
       <Container>
-        <EnquiryModal />
         <HotelSearch />
+      </Container>
+      <Container>
+        <EnquiryModal />
       </Container>
     </>
   );
