@@ -6,6 +6,7 @@ import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import FormControl from "react-bootstrap/FormControl";
+import Container from "react-bootstrap/esm/Container";
 
 function EnquiryModal() {
   const [show, setShow] = useState(false);
@@ -15,10 +16,11 @@ function EnquiryModal() {
 
   return (
     <>
-      <Button className="enquiryModal" variant="primary" onClick={handleShow}>
-        Enquiries <FaCommentDots />
-      </Button>
-
+      <Container>
+        <Button className="enquiryModal" variant="primary" onClick={handleShow}>
+          Enquiries <FaCommentDots />
+        </Button>
+      </Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

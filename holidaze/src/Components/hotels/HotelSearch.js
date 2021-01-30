@@ -18,7 +18,6 @@ function HotelSearch() {
     fetch(url, FETCH_OPTIONS)
       .then((res) => res.json())
       .then((json) => {
-        console.log(json[0].id);
         setHotel(json);
         setFilteredHotel(json);
       })
@@ -42,7 +41,7 @@ function HotelSearch() {
   const filterSuggestion = function (e) {
     const serachValue = e.target.value.toLowerCase();
 
-    const suggestionArray = hotel.filter(function (char) {
+    const suggestionArray = hotel.filter( function (char) {
       const lowerCaseHotel = char.name.toLowerCase();
       if (lowerCaseHotel.includes(serachValue)) {
         return setDisplay(true);
@@ -58,6 +57,8 @@ function HotelSearch() {
       window.removeEventListener("mousedown", clickOutside);
     };
   });
+
+  useEffect(() => {});
 
   const clickOutside = (event) => {
     const { current: wrap } = wrapperRef;
@@ -78,10 +79,21 @@ function HotelSearch() {
 
   return (
     <Container ref={wrapperRef}>
-      <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
+      <SearchForm
+        handleSearch={filterHotel}
+        showTypeahead={filterSuggestion}
+      />
       {filteredHotel.map(
-        ({ id, name, image }) =>
-          display && <Typeahead key={id} name={name} image={image} />
+        ({ id, name, image, description }) =>
+          display && (
+            <Typeahead
+              id={id}
+              key={id}
+              name={name}
+              image={image}
+              description={description}
+            />
+          )
       )}
     </Container>
   );
