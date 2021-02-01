@@ -1,4 +1,35 @@
 import React from "react";
+
+function Admin() {
+  const adminEmail = "admin@holidaze.com";
+  const adminPassword = "Holidaze123";
+
+  localStorage.setItem("adminEmail", adminEmail);
+  localStorage.setItem("adminPassword", adminPassword);
+
+  function loginAdmin(adminEmail, adminPassword) {
+    const registeredAdmin = localStorage.getItem("adminEmail");
+    const registeredPassword = localStorage.getItem("adminPassword");
+
+    const validAdmin = adminEmail === registeredAdmin;
+    const validPassword = adminPassword === registeredPassword;
+
+    if (validAdmin && validPassword) {
+      console.log(123);
+      return `Welcome ${adminEmail}`;
+    } else if (!validAdmin) {
+      return `Wrong email`;
+    } else if (!validPassword) {
+      return `wrong password`;
+    }
+  }
+
+  return <div></div>;
+}
+
+export default Admin;
+
+/*import React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -22,6 +53,8 @@ const Schema = yup.object().shape({
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
 
+
+
 function Admin() {
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(Schema),
@@ -44,6 +77,7 @@ function Admin() {
               <Form.Group>
                 <Form.Label>Email: </Form.Label>
                 <Form.Control
+                  id="adminEmail"
                   size="lg"
                   name="email"
                   placeholder="Email..."
@@ -58,6 +92,7 @@ function Admin() {
               <Form.Group>
                 <Form.Label>Password: </Form.Label>
                 <Form.Control
+                  id="adminPassword"
                   size="lg"
                   type="password"
                   name="password"
@@ -76,6 +111,7 @@ function Admin() {
                   className="admin__button "
                   variant="primary"
                   type="submit"
+                  onClick={loginAdmin}
                 >
                   Login <FaRegArrowAltCircleRight />
                 </Button>
@@ -89,4 +125,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default Admin; */
