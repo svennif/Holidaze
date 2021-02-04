@@ -7,49 +7,41 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const Schema = yup.object().shape({
+const adminEmail = "admin@holidaze.com";
+const adminPassword = "Holidaze123";
+
+localStorage.setItem("adminEmail", adminEmail);
+localStorage.setItem("adminPassword", adminPassword);
+
+const schema = yup.object().shape({
   email: yup
     .string()
     .email("Invalid email address...")
-    .required("Please enter an email."),
+    .required("Please enter an email.")
+    .matches(
+      window.localStorage.getItem("adminEmail"),
+      "This email is not in use"
+    ),
   password: yup
     .string()
     .required("No password provided.")
     .min(8, "Password is too short - should be 8 chars minimum.")
-    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+    .matches(window.localStorage.getItem("adminPassword"), "Wrong password."),
 });
 
 function Admin() {
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = () => {
     console.log("Clicked");
-    const adminEmail = "admin@holidaze.com";
-    const adminPassword = "Holidaze123";
+    localStorage.setItem("isLoggedIn", true);
 
-    localStorage.setItem("adminEmail", adminEmail);
-    localStorage.setItem("adminPassword", adminPassword);
-
-    const registeredAdmin = localStorage.getItem("adminEmail");
-    const registeredPassword = localStorage.getItem("adminPassword");
-    const emailValue = document.getElementById("adminEmail");
-    const passwordValue = document.getElementById("adminPassword");
-
-    if (
-      emailValue.value === registeredAdmin &&
-      passwordValue.value === registeredPassword
-    ) {
-      return (
-        localStorage.removeItem(adminEmail),
-        console.log("Hello world!"),
-        document
-          .querySelector(".success")
-          .append("Success! Your message has been sent!")
-      );
+    if (localStorage.getItem("isLoggedIn") === true) {
+      console.log("Logged in!");
     } else {
-      return console.log(errors.adminEmail?.message);
+      console.log("Login failed!");
     }
   };
 
@@ -64,6 +56,7 @@ function Admin() {
             size="lg"
             name="email"
             placeholder="Email..."
+            type="text"
             ref={register({ required: true, minLength: 2 })}
           />
           <p>

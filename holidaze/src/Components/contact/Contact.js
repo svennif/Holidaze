@@ -16,7 +16,7 @@ import {
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 import EnquiryModal from "../home/EnquiryModal";
 
-const Schema = yup.object().shape({
+const schema = yup.object().shape({
   name: yup
     .string()
     .required("Please enter your full name")
@@ -33,7 +33,7 @@ const Schema = yup.object().shape({
 
 function Contact() {
   const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(Schema),
+    resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
