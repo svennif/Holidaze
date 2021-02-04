@@ -19,18 +19,19 @@ const Schema = yup.object().shape({
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
 
-const onSubmit = () => {
-  document.querySelector(".success").append("You have now logged in!");
-};
-
-const adminEmail = "admin@holidaze.com";
-const adminPassword = "Holidaze123";
-
-localStorage.setItem("adminEmail", adminEmail);
-localStorage.setItem("adminPassword", adminPassword);
-
 function Admin() {
-  function loginAdmin() {
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(Schema),
+  });
+
+  const onSubmit = () => {
+    console.log("Clicked");
+    const adminEmail = "admin@holidaze.com";
+    const adminPassword = "Holidaze123";
+
+    localStorage.setItem("adminEmail", adminEmail);
+    localStorage.setItem("adminPassword", adminPassword);
+
     const registeredAdmin = localStorage.getItem("adminEmail");
     const registeredPassword = localStorage.getItem("adminPassword");
     const emailValue = document.getElementById("adminEmail");
@@ -40,15 +41,17 @@ function Admin() {
       emailValue.value === registeredAdmin &&
       passwordValue.value === registeredPassword
     ) {
-      return console.log("Hello world!");
+      return (
+        localStorage.removeItem(adminEmail),
+        console.log("Hello world!"),
+        document
+          .querySelector(".success")
+          .append("Success! Your message has been sent!")
+      );
     } else {
       return console.log(errors.adminEmail?.message);
     }
-  }
-
-  const { register, handleSubmit, errors } = useForm({
-    resolver: yupResolver(Schema),
-  });
+  };
 
   return (
     <Container>
@@ -76,7 +79,7 @@ function Admin() {
             size="lg"
             type="password"
             name="password"
-            placeholder="*******"
+            placeholder="*********"
             ref={register}
           />
           <p>
@@ -85,17 +88,12 @@ function Admin() {
             </strong>
           </p>
         </Form.Group>
+        <div className="text-right">
+          <Button className="contact__button" variant="primary" type="submit">
+            Submit <FaRegArrowAltCircleRight className="ml-1" />
+          </Button>
+        </div>
       </Form>
-      <div className="text-right">
-        <Button
-          className="admin__button "
-          variant="primary"
-          type="submit"
-          onClick={loginAdmin}
-        >
-          Login <FaRegArrowAltCircleRight />
-        </Button>
-      </div>
     </Container>
   );
 }

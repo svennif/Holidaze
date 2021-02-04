@@ -27,7 +27,7 @@ const Schema = yup.object().shape({
     .required("Please enter an email"),
   message: yup
     .string()
-    .required()
+    .required("Please enter a message!")
     .min(10, "Please enter a message that is more than 10 characters"),
 });
 
@@ -125,7 +125,6 @@ function Contact() {
               <p>+47 123 45 678</p>
             </div>
             <div>
-              {" "}
               <h2 className="contact__under__title">
                 <FaEnvelope className=".contact__icon" /> Email
               </h2>
