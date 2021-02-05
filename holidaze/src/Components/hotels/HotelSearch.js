@@ -78,7 +78,7 @@ function HotelSearch() {
   }
 
   return (
-    <Container ref={wrapperRef}>
+    <Container className="main__container" ref={wrapperRef}>
       <SearchForm
         handleSearch={filterHotel}
         showTypeahead={filterSuggestion}
