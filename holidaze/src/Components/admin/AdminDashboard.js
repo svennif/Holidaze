@@ -1,14 +1,10 @@
 import React from "react";
-import Establishments from "./Establishments";
-import Messages from "./Messages";
-import Enquiries from "./EnquiriesFetch";
+import AdminNavbar from "./AdminNavbar";
 
-function AdminDashboard() {
+function AdminDashboard({ history }) {
   return (
     <>
-      <Establishments />
-      <Messages />
-      <Enquiries />
+      <AdminNavbar history={history} />
     </>
   );
 }

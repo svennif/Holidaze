@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import AdminNavbar from "./AdminNavbar";
 
-function Messages() {
+function Messages({ history }) {
   const [messages, setMessages] = useState([]);
 
   const getMessages = () => {
@@ -11,8 +12,8 @@ function Messages() {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
-
-  return <div></div>;
+  getMessages();
+  return <AdminNavbar history={history} />;
 }
 
 export default Messages;

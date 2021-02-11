@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import AdminNavbar from "./AdminNavbar";
 
-function EnquiriesFetch() {
+function EnquiriesFetch({ history }) {
   const [enquiries, setEnquiries] = useState([]);
 
   const getEnquiries = () => {
@@ -12,8 +13,13 @@ function EnquiriesFetch() {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
   };
+  getEnquiries();
 
-  return <div></div>;
+  return (
+    <div>
+      <AdminNavbar history={history} />
+    </div>
+  );
 }
 
 export default EnquiriesFetch;

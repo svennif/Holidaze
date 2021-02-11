@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
+import { FaCommentDots, FaPaperPlane } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
-import { FaCommentDots } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
@@ -10,11 +10,15 @@ import Container from "react-bootstrap/esm/Container";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { FaPaperPlane } from "react-icons/fa";
+import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 
-const schema = yup.object().shape({});
+const schema = yup.object().shape({
+  name: yup.string().required("Please enter your full name"),
+  email: yup.string().email("Invalid email address").required(),
+  establishmentId: yup.string().required(),
+  checkIn: yup.date().required(),
+  checkOut: yup.date().required(),
+});
 
 function EnquiryModal() {
   const [show, setShow] = useState(false);
@@ -22,8 +26,24 @@ function EnquiryModal() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const { register, handleSubmit, errors } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => {
+    const modalUrl = BASE_URL + "enquiries";
+
+    FETCH_OPTIONS.method = "POST";
+    FETCH_OPTIONS.body = JSON.stringify(data);
+
+    fetch(modalUrl, FETCH_OPTIONS)
+      .then((r) => r.json())
+      .then((j) => console.log(j));
+
+    console.log("Success!");
+  };
+
   // name, email, establishmentID, checkIN, checkOut
-  const [startDate, setStartDate] = useState(new Date());
 
   return (
     <>
@@ -34,56 +54,78 @@ function EnquiryModal() {
       </Container>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Send us an enquiry</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <FormGroup>
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Name: </FormLabel>
               <FormControl
                 type="text"
                 name="name"
-                placeholder="Name... "
-              ></FormControl>
+                ref={register}
+                placeholder="E.g. Leif Bjarte Hansen..."
+              />
+              <p>
+                <strong>
+                  <i>{errors.name?.message}</i>
+                </strong>
+              </p>
             </FormGroup>
             <FormGroup>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email: </FormLabel>
               <FormControl
                 type="email"
                 name="email"
-                placeholder="Email... "
-              ></FormControl>
-            </FormGroup>
-            <FormGroup>
-              <FormLabel>Id</FormLabel>
-              <FormControl type="text" placeholder="Id... "></FormControl>
-            </FormGroup>
-            <FormGroup>
-              <FormLabel>Check in date</FormLabel>
-              <br />
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+                ref={register}
+                placeholder="example@email.com"
               />
+              <p>
+                <strong>
+                  <i>{errors.email?.message}</i>
+                </strong>
+              </p>
             </FormGroup>
             <FormGroup>
-              <FormLabel>Check in date</FormLabel>
-              <br />
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => setStartDate(date)}
+              <FormLabel>Establishment Id: </FormLabel>
+              <FormControl
+                type="establishmentId"
+                name="establishmentId"
+                placeholder="Establishment Id..."
+                ref={register}
               />
+              <p>
+                <strong>
+                  <i>{errors.establishmentId?.message}</i>
+                </strong>
+              </p>
             </FormGroup>
+            <FormGroup>
+              <FormLabel>Check In: </FormLabel>
+              <FormControl type="date" name="checkIn" ref={register} />
+              <p>
+                <strong>
+                  <i>{errors.checkIn?.message}</i>
+                </strong>
+              </p>
+            </FormGroup>
+            <FormGroup>
+              <FormLabel>Check Out: </FormLabel>
+              <FormControl type="date" name="checkOut" ref={register} />
+              <p>
+                <strong>
+                  <i>{errors.checkOut?.message}</i>
+                </strong>
+              </p>
+            </FormGroup>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" type="submit" className="ml-2">
+              Send <FaPaperPlane />
+            </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Send <FaPaperPlane />
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );
