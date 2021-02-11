@@ -8,6 +8,19 @@ $secondary-text: #7a8b88;
 $main-heading-font: quasimoda, sans-serif;
 $main-font: houschka-pro, sans-serif;
 
+$sizes: () !default;
+$sizes: map-merge(
+  (
+    10: 10%,
+    25: 25%,
+    50: 50%,
+    75: 75%,
+    100: 100%,
+    auto: auto,
+  ),
+  $sizes
+);
+
 // bootstrap
 $theme-colors: (
   "primary": $main-colour,
@@ -24,4 +37,3 @@ $headings-font-family: $main-heading-font;
 @import "./partials/search";
 @import "./partials/enquiry.scss";
 @import "./partials/contact.scss";
-@import "./partials/adminNavbar";

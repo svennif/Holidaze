@@ -5,7 +5,6 @@ import Hotels from "./Components/hotels/Hotels";
 import Admin from "./Components/admin/Admin";
 import Contact from "./Components/contact/Contact";
 import AdminDashboard from "./Components/admin/AdminDashboard";
-
 import "./scss/style.scss";
 import Establishments from "./Components/admin/Establishments";
 import Messages from "./Components/admin/Messages";

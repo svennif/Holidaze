@@ -8,6 +8,8 @@ import FormGroup from "react-bootstrap/FormGroup";
 import FormLabel from "react-bootstrap/FormLabel";
 import FormControl from "react-bootstrap/FormControl";
 import Container from "react-bootstrap/esm/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -58,97 +60,109 @@ function Establishments({ history }) {
 
   return (
     <>
-      <AdminNavbar history={history} />
-      <Container>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <FormGroup>
-            <FormLabel>Hotel name: </FormLabel>
-            <FormControl
-              name="name"
-              ref={register}
-              placeholder="E.g. Sleep Well Hotel"
-            />
-            <p>
-              <strong>
-                <i>{errors.name?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Hotel email: </FormLabel>
-            <FormControl
-              name="email"
-              ref={register}
-              placeholder="example@email.com"
-            />
-            <p>
-              <strong>
-                <i>{errors.email?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Image: </FormLabel>
-            <FormControl
-              name="image"
-              ref={register}
-              placeholder="Link to image..."
-            />
-            <p>
-              <strong>
-                <i>{errors.image?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Price: </FormLabel>
-            <FormControl type="number" min="500" name="price" ref={register} />
-            <p>
-              <strong>
-                <i>{errors.price?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Description: </FormLabel>
-            <FormControl as="textarea" name="description" ref={register} />
-            <p>
-              <strong>
-                <i>{errors.description?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Address: </FormLabel>
-            <FormControl name="address" ref={register} />
-            <p>
-              <strong>
-                <i>{errors.address?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Self catering? </FormLabel>
-            <br />
-            <ToggleButtonGroup
-              type="radio"
-              value={radioValue}
-              name="selfCatering"
-              onChange={handleChange}
-            >
-              <ToggleButton value={false}>Yes</ToggleButton>
-              <ToggleButton value={true}>No</ToggleButton>
-            </ToggleButtonGroup>
-            <p>
-              <strong>
-                <i>{errors.selfCatering?.message}</i>
-              </strong>
-            </p>
-          </FormGroup>
-          <Button type="submit" variant="primary" className="p-2">
-            Submit <FaPaperPlane className="ml-1" />
-          </Button>
-        </Form>
+      <Container className="mt-3">
+        <Row>
+          <Col sm={2} className="ml-0">
+            <AdminNavbar history={history} />
+          </Col>
+          <Col sm={10}>
+            <h1>Add a new hotel: </h1>
+            <Form onSubmit={handleSubmit(onSubmit)}>
+              <FormGroup>
+                <FormLabel>Hotel name: </FormLabel>
+                <FormControl
+                  name="name"
+                  ref={register}
+                  placeholder="E.g. Sleep Well Hotel"
+                />
+                <p>
+                  <strong>
+                    <i>{errors.name?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Hotel email: </FormLabel>
+                <FormControl
+                  name="email"
+                  ref={register}
+                  placeholder="example@email.com"
+                />
+                <p>
+                  <strong>
+                    <i>{errors.email?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Image: </FormLabel>
+                <FormControl
+                  name="image"
+                  ref={register}
+                  placeholder="Link to image..."
+                />
+                <p>
+                  <strong>
+                    <i>{errors.image?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Price: </FormLabel>
+                <FormControl
+                  type="number"
+                  min="500"
+                  name="price"
+                  ref={register}
+                />
+                <p>
+                  <strong>
+                    <i>{errors.price?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Description: </FormLabel>
+                <FormControl as="textarea" name="description" ref={register} />
+                <p>
+                  <strong>
+                    <i>{errors.description?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Address: </FormLabel>
+                <FormControl name="address" ref={register} />
+                <p>
+                  <strong>
+                    <i>{errors.address?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Self catering? </FormLabel>
+                <br />
+                <ToggleButtonGroup
+                  type="radio"
+                  value={radioValue}
+                  name="selfCatering"
+                  onChange={handleChange}
+                >
+                  <ToggleButton value={false}>Yes</ToggleButton>
+                  <ToggleButton value={true}>No</ToggleButton>
+                </ToggleButtonGroup>
+                <p>
+                  <strong>
+                    <i>{errors.selfCatering?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <Button type="submit" variant="primary" className="p-2">
+                Submit <FaPaperPlane className="ml-1" />
+              </Button>
+            </Form>
+          </Col>
+        </Row>
       </Container>
     </>
   );

@@ -10,7 +10,7 @@ function AdminNavbar({ history }) {
   };
   return (
     <>
-      <Nav className="ml-auto d-flex flex-column">
+      <Nav className=" admin__Navbar d-flex flex-column w-10">
         <NavLink id="home" to="/admin/dashboard" exact className="nav-link">
           Dashboard
         </NavLink>
