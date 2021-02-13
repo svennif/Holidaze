@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import { BASE_URL, FETCH_OPTIONS } from "../../../Api";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
@@ -14,23 +14,19 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaPaperPlane } from "react-icons/fa";
-import AdminNavbar from "./AdminNavbar";
+import AdminNavbar from "../AdminNavbar";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter a name for the hotel."),
-  email: yup.string().required("Please enter an email for the hotel."),
-  image: yup.string().required("Please enter an image for the hotel."),
+  email: yup.string(),
+  image: yup.string(),
   price: yup
     .number("Please enter a number for the price.")
-    .required("Please enter a price for the hotel.")
     .min(500, "Minimum price is 500"),
-  description: yup
-    .string()
-    .required("Please enter a description for the hotel."),
-  address: yup.string().required("Please enter an address for the hotel."),
-  selfCatering: yup
-    .bool()
-    .required("Please say Yes or No, if there is self catering"),
+  maxGuests: yup.number("Please enter a number of max guests."),
+  description: yup.string(),
+  address: yup.string(),
+  selfCatering: yup.bool(),
 });
 
 function Establishments({ history }) {
@@ -49,6 +45,10 @@ function Establishments({ history }) {
       .then((r) => r.json())
       .then((j) => console.log(j))
       .catch((err) => console.log(err));
+
+    document
+      .querySelector(".success")
+      .append("Success! Your message has been sent!");
   };
 
   const [radioValue, setRadioValue] = useState(false);
@@ -68,6 +68,10 @@ function Establishments({ history }) {
           <Col sm={10}>
             <h1>Add a new hotel: </h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
+              <p
+                className="success"
+                style={{ color: "Green" }}
+              ></p>
               <FormGroup>
                 <FormLabel>Hotel name: </FormLabel>
                 <FormControl
@@ -118,6 +122,15 @@ function Establishments({ history }) {
                 <p>
                   <strong>
                     <i>{errors.price?.message}</i>
+                  </strong>
+                </p>
+              </FormGroup>
+              <FormGroup>
+                <FormLabel>Max guests: </FormLabel>
+                <FormControl type="number" name="maxGuests" ref={register} />
+                <p>
+                  <strong>
+                    <i>{errors.maxGuests?.message}</i>
                   </strong>
                 </p>
               </FormGroup>

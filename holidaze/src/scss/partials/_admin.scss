@@ -7,4 +7,17 @@
       border-top: 1px solid $main-colour;
     }
   }
+  &__dropdown {
+    border-right: 1px solid $main-colour;
+    border-bottom: 1px solid $main-colour;
+    border-left: 1px solid $main-colour;
+  }
+  &__link:hover {
+    background-color: $main-colour;
+    color: $main-text;
+  }
+}
+
+.dropdown-menu {
+  padding: 0;
 }

@@ -9,7 +9,7 @@ function HotelCards({ name, image, description, price, id, maxGuests }) {
     <Link
       className="search-card"
       to={{
-        pathname: `/hotels/${id}`,
+        pathname: `/admin/dashboard/establishments/patch/edit/${id}`,
         state: { name, image, id, description, maxGuests },
       }}
     >

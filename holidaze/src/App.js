@@ -9,15 +9,19 @@ import { AuthContextProvider } from "./context/AuthContext";
 import Header from "./Components/Navbar/Header";
 import Home from "./Components/home/Home";
 import Hotels from "./Components/hotels/Hotels";
-import Admin from "./Components/admin/Admin";
 import Contact from "./Components/contact/Contact";
-import AdminDashboard from "./Components/admin/AdminDashboard";
 import "./scss/style.scss";
-import Establishments from "./Components/admin/Establishments";
-import Messages from "./Components/admin/Messages";
-import Enquiries from "./Components/admin/EnquiriesFetch";
 import Logout from "./Components/admin/Logout";
 import AllHotels from "./Components/hotels/AllHotels";
+
+// Admin
+import Admin from "./Components/admin/Admin";
+import AdminDashboard from "./Components/admin/AdminDashboard";
+import Messages from "./Components/admin/Messages";
+import Enquiries from "./Components/admin/EnquiriesFetch";
+import Establishments from "./Components/admin/hotels/Establishments";
+import AdminEstablishments from "./Components/admin/hotels/AdminHotels";
+import EstablishmentsPatch from "./Components/admin/hotels/EstablishmentsPatch";
 
 function App() {
   return (
@@ -41,9 +45,19 @@ function App() {
             component={Enquiries}
           />
           <ProtectedRoute
-            path="/admin/dashboard/establishments"
+            path="/admin/dashboard/establishments/new"
             exact
             component={Establishments}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/establishments/update"
+            exact
+            component={AdminEstablishments}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/establishments/patch/edit/:id"
+            exact
+            component={EstablishmentsPatch}
           />
           <ProtectedRoute
             path="/admin/dashboard/messages"
