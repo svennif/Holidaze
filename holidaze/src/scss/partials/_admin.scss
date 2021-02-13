@@ -1,0 +1,10 @@
+.admin__Navbar {
+  &__link {
+    border-right: 1px solid $main-colour;
+    border-bottom: 1px solid $main-colour;
+    border-left: 1px solid $main-colour;
+    &:first-child {
+      border-top: 1px solid $main-colour;
+    }
+  }
+}

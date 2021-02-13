@@ -1,4 +1,11 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import ProtectedRoute from "./Components/routes/ProtectedRoutes";
+import { AuthContextProvider } from "./context/AuthContext";
 import Header from "./Components/Navbar/Header";
 import Home from "./Components/home/Home";
 import Hotels from "./Components/hotels/Hotels";
@@ -14,26 +21,41 @@ import AllHotels from "./Components/hotels/AllHotels";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Switch>
-        <Route path="/allhotels" exact component={AllHotels} />
-        <Route path="/hotels" exact component={Hotels} />
-        <Route path="/hotels/:id" exact component={Hotels} />
-        <Route path="/admin" exact component={Admin} />
-        <Route path="/logout" exact component={Logout} />
-        <Route path="/admin/dashboard" exact component={AdminDashboard} />
-        <Route path="/admin/dashboard/enquiries" exact component={Enquiries} />
-        <Route
-          path="/admin/dashboard/establishments"
-          exact
-          component={Establishments}
-        />
-        <Route path="/admin/dashboard/messages" exact component={Messages} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/" exact component={Home} />
-      </Switch>
-    </Router>
+    <AuthContextProvider>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path="/allhotels" exact component={AllHotels} />
+          <Route path="/hotels" exact component={Hotels} />
+          <Route path="/hotels/:id" exact component={Hotels} />
+          <Route path="/admin" exact component={Admin} />
+          <Route path="/logout" exact component={Logout} />
+          <ProtectedRoute
+            path="/admin/dashboard"
+            exact
+            component={AdminDashboard}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/enquiries"
+            exact
+            component={Enquiries}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/establishments"
+            exact
+            component={Establishments}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/messages"
+            exact
+            component={Messages}
+          />
+          <Route path="/contact" component={Contact} />
+          <Route path="/" exact component={Home} />
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </AuthContextProvider>
   );
 }
 
