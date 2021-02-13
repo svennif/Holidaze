@@ -20,7 +20,7 @@ const schema = yup.object().shape({
   checkOut: yup.date().required(),
 });
 
-function EnquiryModal() {
+function EnquiryModal({ hotel }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -91,8 +91,9 @@ function EnquiryModal() {
               <FormControl
                 type="establishmentId"
                 name="establishmentId"
-                placeholder="Establishment Id..."
                 ref={register}
+                defaultValue={hotel}
+                readOnly
               />
               <p>
                 <strong>

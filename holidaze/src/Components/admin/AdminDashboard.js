@@ -10,15 +10,3 @@ function AdminDashboard({ history }) {
 }
 
 export default AdminDashboard;
-
-/**
- *
- * List of enquiries // GET
- *
- * List of messages from contact // GET
- *
- * Create new establishment // POST
- *
- * Update establishments // PATCH
- *
- */

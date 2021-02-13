@@ -1,17 +1,14 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
 import Container from "react-bootstrap/Container";
-import SearchForm from "../hotels/SearchForm";
+import SearchForm from "./SearchForm";
+import HotelCards from "./HotelCards";
 import Spinner from "react-bootstrap/Spinner";
-import Typeahead from "./Typeahead";
 
-function HotelSearch() {
+function AllHotels() {
   const [hotel, setHotel] = useState([]);
   const [filteredHotel, setFilteredHotel] = useState([]);
-  const [showDisplay, setShowDisplay] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [display, setDisplay] = useState(false);
-  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const url = BASE_URL + "establishments";
@@ -20,6 +17,7 @@ function HotelSearch() {
       .then((json) => {
         setHotel(json);
         setFilteredHotel(json);
+        console.log(json);
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -38,33 +36,6 @@ function HotelSearch() {
     setFilteredHotel(filterArray);
   };
 
-  const filterSuggestion = function (e) {
-    const serachValue = e.target.value.toLowerCase();
-
-    const suggestionArray = hotel.filter(function (char) {
-      const lowerCaseHotel = char.name.toLowerCase();
-      if (lowerCaseHotel.includes(serachValue)) {
-        return setDisplay(true);
-      }
-      return setDisplay(false);
-    });
-    setShowDisplay(suggestionArray);
-  };
-
-  useEffect(() => {
-    window.addEventListener("mousedown", clickOutside);
-    return () => {
-      window.removeEventListener("mousedown", clickOutside);
-    };
-  });
-
-  const clickOutside = (event) => {
-    const { current: wrap } = wrapperRef;
-    if (wrap && !wrap.contains(event.target)) {
-      setDisplay(false);
-    }
-  };
-
   if (loading) {
     return (
       <Container id="SpinnerContainer">
@@ -76,22 +47,27 @@ function HotelSearch() {
   }
 
   return (
-    <Container className="main__container" ref={wrapperRef}>
-      <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
+    <Container className="all-hotels">
+      <h1 className="all-hotels__title mt-2">Hotels</h1>
+      <hr />
+      <SearchForm handleSearch={filterHotel} />
       {filteredHotel.map(
-        ({ id, name, image, description }) =>
-          display && (
-            <Typeahead
-              id={id}
+        ({ id, name, image, description, price, maxGuests }) => {
+          return (
+            <HotelCards
               key={id}
+              id={id}
               name={name}
               image={image}
               description={description}
+              price={price}
+              maxGuests={maxGuests}
             />
-          )
+          );
+        }
       )}
     </Container>
   );
 }
 
-export default HotelSearch;
+export default AllHotels;
