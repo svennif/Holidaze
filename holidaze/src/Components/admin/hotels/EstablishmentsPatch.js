@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { BASE_URL, FETCH_OPTIONS, PATCH } from "../../../Api";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
 import EstablishmentPatchForm from "./EstablishmentPatchForm";
-import DeleteEstablishments from "./DeleteEstablishments";
 
 function EstablishmentsPatch() {
-  const history = useHistory();
   const [hotel, setHotel] = useState({});
   const [loading, setLoading] = useState(true);
 
   let { id } = useParams();
 
-  const url = BASE_URL + "establishments/" + id;
-
   useEffect(() => {
+    const url = BASE_URL + "establishments/" + id;
     fetch(url, FETCH_OPTIONS)
       .then((r) => r.json())
       .then((j) => {
@@ -25,7 +21,7 @@ function EstablishmentsPatch() {
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [id]);
 
   if (loading) {
     return <Spinner className="spinner" animation="border" variant="primary" />;
@@ -37,8 +33,9 @@ function EstablishmentsPatch() {
     FETCH_OPTIONS.method = PATCH;
     FETCH_OPTIONS.body = JSON.stringify(data);
 
-    await fetch(url, FETCH_OPTIONS);
-    history.push("/admin/hotels");
+    await fetch(BASE_URL + "establishments/" + id, FETCH_OPTIONS);
+
+    window.location.assign("/admin/dashboard/establishments/update");
   }
 
   const {

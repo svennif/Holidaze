@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -11,15 +11,16 @@ import { FaSyncAlt } from "react-icons/fa";
 
 const schema = yup.object().shape({
   name: yup.string().required(),
-  email: yup.string().required(),
-  image: yup.string().required(),
-  price: yup.number().required().min(500),
-  maxGuests: yup.number().required(),
-  description: yup.string().required().min(10).max(140),
+  email: yup.string(),
+  image: yup.string(),
+  price: yup.number().min(10),
+  maxGuests: yup.number().min(1),
+  description: yup.string().min(10).max(140),
 });
 
 function EstablishmentPatchForm({
   onSubmit,
+  id,
   name,
   email,
   image,
@@ -30,10 +31,6 @@ function EstablishmentPatchForm({
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
-
-  const deletePath = "establishments/";
-  const historyPath = "/admin/hotels";
-  let { id } = useParams();
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +71,7 @@ function EstablishmentPatchForm({
           defaultValue={maxGuests}
           type="number"
           name="maxGuests"
+          min="1"
           ref={register}
           isInvalid={errors.maxGuests}
           placeholder="Max guests"
@@ -89,7 +87,7 @@ function EstablishmentPatchForm({
         <Form.Control
           defaultValue={price}
           type="number"
-          min="500"
+          min="10"
           name="price"
           ref={register}
           isInvalid={errors.price}
@@ -136,11 +134,7 @@ function EstablishmentPatchForm({
       <Button type="submit" className="mr-3">
         Update <FaSyncAlt className="ml-1" />
       </Button>
-      <DeleteEstablishments
-        historyPath={historyPath}
-        id={id}
-        deletePath={deletePath}
-      />
+      <DeleteEstablishments id={id} />
     </Form>
   );
 }

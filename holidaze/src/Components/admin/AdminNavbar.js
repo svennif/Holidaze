@@ -25,10 +25,7 @@ function AdminNavbar() {
       >
         Messages
       </NavLink>
-      <NavDropdown
-        title="Hotels"
-        className="admin__Navbar__dropdown"
-      >
+      <NavDropdown title="Hotels" className="admin__Navbar__dropdown">
         <NavLink
           to="/admin/dashboard/establishments/new"
           className="nav-link admin__Navbar__link"

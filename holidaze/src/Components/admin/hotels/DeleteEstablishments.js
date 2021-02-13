@@ -2,14 +2,10 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { BASE_URL, FETCH_OPTIONS, DELETE } from "../../../Api";
-import { useHistory } from "react-router-dom";
 import { FaTrashAlt } from "react-icons/fa";
 
-function DeleteEstablishments({ id, deletePath }) {
-  const history = useHistory();
-
+function DeleteEstablishments({ id }) {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
 
   function checkDelete() {
@@ -17,13 +13,13 @@ function DeleteEstablishments({ id, deletePath }) {
   }
 
   async function deleteHotel() {
-    const url = BASE_URL + deletePath + id;
+    const url = BASE_URL + "establishments/" + id;
 
     FETCH_OPTIONS.method = DELETE;
 
-    await fetch(url, FETCH_OPTIONS).then(
-      history.push("/admin/dashboard/establishments/update")
-    );
+    await fetch(url, FETCH_OPTIONS);
+
+    window.location.assign("/admin/dashboard/establishments/update");
   }
 
   return (

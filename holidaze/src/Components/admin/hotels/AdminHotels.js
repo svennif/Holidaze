@@ -12,7 +12,6 @@ function AdminHotels({ history }) {
   const [loading, setLoading] = useState(true);
 
   const url = BASE_URL + "establishments";
-  const linkPath = "/admin/hotels/edit/";
 
   useEffect(() => {
     fetch(url, FETCH_OPTIONS)
@@ -26,7 +25,11 @@ function AdminHotels({ history }) {
   }, []);
 
   if (loading) {
-    return <Spinner className="spinner" animation="border" variant="primary" />;
+    return (
+      <Container>
+        <Spinner className="spinner" animation="border" variant="primary" />
+      </Container>
+    );
   }
 
   return (
@@ -36,19 +39,19 @@ function AdminHotels({ history }) {
           <AdminNavbar history={history} />
         </Col>
         <Col sm={12} md={12} lg={10}>
-          <h1> Select a hotel to update Hotels</h1>
+          <h1> Select a hotel to update</h1>
           {hotels &&
             hotels.map((hotel) => {
-              const { id, name, image, price, maxGuests } = hotel;
+              const { id, name, image, price, maxGuests, description } = hotel;
               return (
                 <AdminHotelCards
                   key={id}
+                  description={description}
                   maxGuests={maxGuests}
                   name={name}
                   image={image}
                   price={price}
                   id={id}
-                  linkPath={linkPath}
                 />
               );
             })}

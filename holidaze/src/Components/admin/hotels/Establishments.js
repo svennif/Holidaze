@@ -22,7 +22,7 @@ const schema = yup.object().shape({
   image: yup.string(),
   price: yup
     .number("Please enter a number for the price.")
-    .min(500, "Minimum price is 500"),
+    .min(10, "Minimum price is 500"),
   maxGuests: yup.number("Please enter a number of max guests."),
   description: yup.string(),
   address: yup.string(),
@@ -35,8 +35,7 @@ function Establishments({ history }) {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    const establishmentUrl = BASE_URL + "establishments";
+    const establishmentUrl = BASE_URL + "establishments/";
 
     FETCH_OPTIONS.method = "POST";
     FETCH_OPTIONS.body = JSON.stringify(data);
@@ -48,7 +47,9 @@ function Establishments({ history }) {
 
     document
       .querySelector(".success")
-      .append("Success! Your message has been sent!");
+      .append("Success! Your hotel has been added!");
+
+    setTimeout(window.location.reload(false), 5000);
   };
 
   const [radioValue, setRadioValue] = useState(false);
@@ -68,10 +69,7 @@ function Establishments({ history }) {
           <Col sm={10}>
             <h1>Add a new hotel: </h1>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <p
-                className="success"
-                style={{ color: "Green" }}
-              ></p>
+              <p className="success" style={{ color: "Green" }}></p>
               <FormGroup>
                 <FormLabel>Hotel name: </FormLabel>
                 <FormControl
@@ -115,7 +113,7 @@ function Establishments({ history }) {
                 <FormLabel>Price: </FormLabel>
                 <FormControl
                   type="number"
-                  min="500"
+                  min="10"
                   name="price"
                   ref={register}
                 />

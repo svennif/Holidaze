@@ -4,6 +4,7 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+
 import ProtectedRoute from "./Components/routes/ProtectedRoutes";
 import { AuthContextProvider } from "./context/AuthContext";
 import Header from "./Components/Navbar/Header";
@@ -17,8 +18,8 @@ import AllHotels from "./Components/hotels/AllHotels";
 // Admin
 import Admin from "./Components/admin/Admin";
 import AdminDashboard from "./Components/admin/AdminDashboard";
-import Messages from "./Components/admin/Messages";
-import Enquiries from "./Components/admin/EnquiriesFetch";
+import Messages from "./Components/admin/messages/Messages";
+import Enquiries from "./Components/admin/enquiries/EnquiriesFetch";
 import Establishments from "./Components/admin/hotels/Establishments";
 import AdminEstablishments from "./Components/admin/hotels/AdminHotels";
 import EstablishmentsPatch from "./Components/admin/hotels/EstablishmentsPatch";
