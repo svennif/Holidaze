@@ -36,7 +36,7 @@ function AdminCards() {
                 className="admin__card__img"
               />
               <Card.Body>
-                <Card.Title>Create new establishment</Card.Title>
+                <Card.Title>Create new hotel</Card.Title>
                 <Button variant="primary">SELECT</Button>
               </Card.Body>
             </Card>

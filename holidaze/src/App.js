@@ -12,7 +12,7 @@ import Home from "./Components/home/Home";
 import Hotels from "./Components/hotels/Hotels";
 import Contact from "./Components/contact/Contact";
 import "./scss/style.scss";
-import Logout from "./Components/admin/Logout";
+import Logout from "./Components/auth/Logout";
 import AllHotels from "./Components/hotels/AllHotels";
 
 // Admin

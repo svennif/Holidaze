@@ -3,9 +3,12 @@ import { useParams } from "react-router-dom";
 import { BASE_URL, headers, PATCH } from "../../../Api";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import EstablishmentPatchForm from "./EstablishmentPatchForm";
+import AdminNavbar from "../AdminNavbar";
 
-function EstablishmentsPatch() {
+function EstablishmentsPatch({ history }) {
   const [hotel, setHotel] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -53,19 +56,26 @@ function EstablishmentsPatch() {
   if (hotel) {
     return (
       <Container>
-        <h1>Edit Establishment</h1>
-        <EstablishmentPatchForm
-          onSubmit={onSubmit}
-          name={name}
-          email={email}
-          id={id}
-          image={image}
-          price={price}
-          maxGuests={maxGuests}
-          description={description}
-          address={address}
-          selfCatering={selfCatering}
-        />
+        <Row>
+          <Col sm={2} className="ml-0">
+            <AdminNavbar history={history} />
+          </Col>
+          <Col sm={10}>
+            <h1>Edit Establishment</h1>
+            <EstablishmentPatchForm
+              onSubmit={onSubmit}
+              name={name}
+              email={email}
+              id={id}
+              image={image}
+              price={price}
+              maxGuests={maxGuests}
+              description={description}
+              address={address}
+              selfCatering={selfCatering}
+            />
+          </Col>
+        </Row>
       </Container>
     );
   }
