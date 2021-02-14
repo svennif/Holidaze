@@ -11,9 +11,9 @@ function AdminHotels({ history }) {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const url = BASE_URL + "establishments";
-
   useEffect(() => {
+    const url = BASE_URL + "establishments";
+
     fetch(url, FETCH_OPTIONS)
       .then((response) => response.json())
       .then((json) => {

@@ -3,17 +3,17 @@ import AdminNavbar from "./AdminNavbar";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import AdminCards from "./AdminCards";
 
 function AdminDashboard({ history }) {
   return (
     <>
       <Container>
-        <Row>
-          <Col sm={12} md={12} lg={2}>
-            <AdminNavbar  history={history} />
-          </Col>
+        <Row className="text-center">
           <Col sm={12} md={12} lg={10}>
-            <h1>Hello world</h1>
+            <h1>Admin dashboard</h1>
+            <hr />
+            <AdminCards/>
           </Col>
         </Row>
       </Container>

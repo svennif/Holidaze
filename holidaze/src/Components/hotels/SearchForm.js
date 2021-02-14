@@ -5,7 +5,7 @@ import FormControl from "react-bootstrap/FormControl";
 
 const SearchForm = ({ handleSearch, showTypeahead }) => {
   return (
-    <InputGroup size="lg" className="search typeahead vw-50 my-3">
+    <InputGroup size="lg" className="search typeahead w-75 my-3 mx-auto">
       <FormControl
         placeholder="Search for a hotel..."
         onChange={(e) => handleSearch(e)}

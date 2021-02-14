@@ -1,9 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
 import { BASE_URL, FETCH_OPTIONS } from "../../Api";
-import Container from "react-bootstrap/Container";
 import SearchForm from "../hotels/SearchForm";
+import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import Typeahead from "./Typeahead";
+import { Link } from "react-router-dom";
 
 function HotelSearch() {
   const [hotel, setHotel] = useState([]);
@@ -76,20 +80,36 @@ function HotelSearch() {
   }
 
   return (
-    <Container className="main__container" ref={wrapperRef}>
-      <SearchForm handleSearch={filterHotel} showTypeahead={filterSuggestion} />
-      {filteredHotel.map(
-        ({ id, name, image, description }) =>
-          display && (
-            <Typeahead
-              id={id}
-              key={id}
-              name={name}
-              image={image}
-              description={description}
-            />
-          )
-      )}
+    <Container className="typeahead" ref={wrapperRef}>
+      <Row className="d-flex justify-content-center">
+        <Col xs={12} lg={10} className="home__content">
+          <h1 className="home__title">Holidaze</h1>
+          <p className="home__banner">
+            <i>Your home away from home</i>
+          </p>
+          <SearchForm
+            handleSearch={filterHotel}
+            showTypeahead={filterSuggestion}
+          />
+          {filteredHotel.map(
+            ({ id, name, image, description }) =>
+              display && (
+                <Typeahead
+                  id={id}
+                  key={id}
+                  name={name}
+                  image={image}
+                  description={description}
+                />
+              )
+          )}
+        </Col>
+      </Row>
+      <Link to="/allhotels" className="home__link">
+        <div className="text-center home__link__container">
+          <Button className="home__link__button">Check out our hotels</Button>
+        </div>
+      </Link>
     </Container>
   );
 }

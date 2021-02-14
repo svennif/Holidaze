@@ -7,13 +7,13 @@ import Col from "react-bootstrap/Col";
 function Typeahead({ name, image, id, description }) {
   return (
     <Link
-      className="typeahead__container"
+      className="typeahead__link"
       to={{
         pathname: `/hotels/${id}`,
         state: { name, image, id, description },
       }}
     >
-      <Container>
+      <Container className="typeahead__link__container">
         <Row>
           <Col sm={1} md={2}>
             <img className="typeahead__image" src={image} alt={name} />

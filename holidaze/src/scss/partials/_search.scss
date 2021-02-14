@@ -1,24 +1,27 @@
-.typeahead__image {
-  height: 100px;
-  width: 100px;
-}
+.typeahead {
+  margin-top: 100px;
 
-.typeahead__name {
-  font-size: 1.333rem;
-  line-height: 1.5;
-  text-align: left;
-}
+  &__image {
+    height: 100px;
+    width: 100px;
+  }
+  &__name {
+    font-size: 1.333rem;
+    line-height: 1.5;
+    text-align: left;
+  }
+  .typeahead__link {
+    &__container {
+      padding: 9px;
+      border-left: 2px solid;
+      border-right: 2px solid;
+      border-bottom: 2px solid;
 
-.main__container {
-  .typeahead__container .container {
-    padding: 9px;
-    border-left: 2px solid;
-    border-right: 2px solid;
+      background-color: $main-text;
 
-    border-bottom: 2px solid;
-
-    &:hover {
-      background-color: $hover;
+      &:hover {
+        background-color: $hover;
+      }
     }
   }
 }
