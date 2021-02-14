@@ -19,7 +19,9 @@ import AllHotels from "./Components/hotels/AllHotels";
 import Admin from "./Components/admin/Admin";
 import AdminDashboard from "./Components/admin/AdminDashboard";
 import Messages from "./Components/admin/messages/Messages";
+import MessagesDetails from "./Components/admin/messages/MessageDetail";
 import Enquiries from "./Components/admin/enquiries/EnquiriesFetch";
+import EnquiriesDetails from "./Components/admin/enquiries/EnquiryDetail";
 import Establishments from "./Components/admin/hotels/Establishments";
 import AdminEstablishments from "./Components/admin/hotels/AdminHotels";
 import EstablishmentsPatch from "./Components/admin/hotels/EstablishmentsPatch";
@@ -46,6 +48,16 @@ function App() {
             component={Enquiries}
           />
           <ProtectedRoute
+            path="/admin/dashboard/enquiries/detail"
+            exact
+            component={EnquiriesDetails}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/enquiries/detail/:id"
+            exact
+            component={EnquiriesDetails}
+          />
+          <ProtectedRoute
             path="/admin/dashboard/establishments/new"
             exact
             component={Establishments}
@@ -64,6 +76,16 @@ function App() {
             path="/admin/dashboard/messages"
             exact
             component={Messages}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/messages/detail"
+            exact
+            component={MessagesDetails}
+          />
+          <ProtectedRoute
+            path="/admin/dashboard/messages/detail/:id"
+            exact
+            component={MessagesDetails}
           />
           <Route path="/contact" component={Contact} />
           <Route path="/" exact component={Home} />

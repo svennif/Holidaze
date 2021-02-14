@@ -1,12 +1,11 @@
 import React from "react";
-//import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import DeleteEstablishments from "./DeleteEstablishments";
+import DeleteEstablishments from "../DeleteEstablishments";
 import { FaSyncAlt } from "react-icons/fa";
 
 const schema = yup.object().shape({
@@ -31,6 +30,9 @@ function EstablishmentPatchForm({
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
+
+  let historyPath = "/admin/dashboard/establishments/update";
+  let deletePath = "establishments/";
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -134,7 +136,11 @@ function EstablishmentPatchForm({
       <Button type="submit" className="mr-3">
         Update <FaSyncAlt className="ml-1" />
       </Button>
-      <DeleteEstablishments id={id} />
+      <DeleteEstablishments
+        id={id}
+        historyPath={historyPath}
+        deletePath={deletePath}
+      />
     </Form>
   );
 }
