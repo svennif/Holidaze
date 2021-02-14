@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import { BASE_URL, headers } from "../../Api";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -12,8 +12,9 @@ function Hotels({ match, hotel }) {
   let [hotels, setHotels] = useState({});
 
   useEffect(() => {
+    const options = { headers };
     const hotelUrl = BASE_URL + "establishments";
-    fetch(hotelUrl + `/${match.params.id}`, FETCH_OPTIONS)
+    fetch(hotelUrl + `/${match.params.id}`, options)
       .then((r) => r.json())
       .then((j) => setHotels(j))
       .catch((err) => console.log(err));
@@ -80,7 +81,7 @@ function Hotels({ match, hotel }) {
             </Col>
           </Row>
         </Card>
-        <HotelEnquiry hotel={hotel}/>
+        <HotelEnquiry hotel={hotels.name} />
       </Container>
     </>
   );

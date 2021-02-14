@@ -13,8 +13,7 @@ import {
   FaEnvelope,
   FaPaperPlane,
 } from "react-icons/fa";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
-import EnquiryModal from "../home/EnquiryModal";
+import { BASE_URL, headers } from "../../Api";
 
 const schema = yup.object().shape({
   name: yup
@@ -38,16 +37,20 @@ function Contact() {
 
   const onSubmit = (data) => {
     const url = BASE_URL + "contacts";
-    FETCH_OPTIONS.method = "POST";
-    FETCH_OPTIONS.body = JSON.stringify(data);
+    const options = { headers };
 
-    fetch(url, FETCH_OPTIONS)
+    options.method = "POST";
+    options.body = JSON.stringify(data);
+
+    fetch(url, options)
       .then((res) => res.json())
       .then((data) => console.log(data));
 
     document
       .querySelector(".success")
       .append("Success! Your message has been sent!");
+
+    setTimeout(window.location.reload(false), 5000);
   };
 
   return (
@@ -132,9 +135,6 @@ function Contact() {
             </div>
           </Col>
         </Row>
-      </Container>
-      <Container>
-        <EnquiryModal />
       </Container>
     </>
   );

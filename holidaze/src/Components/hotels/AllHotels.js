@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import { BASE_URL, headers } from "../../Api";
 import Container from "react-bootstrap/Container";
 import SearchForm from "./SearchForm";
 import HotelCards from "./HotelCards";
@@ -11,8 +11,9 @@ function AllHotels() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const options = { headers };
     const url = BASE_URL + "establishments";
-    fetch(url, FETCH_OPTIONS)
+    fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
         setHotel(json);

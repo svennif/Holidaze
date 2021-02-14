@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../../Api";
+import { BASE_URL, headers } from "../../../Api";
 import AdminNavbar from "../AdminNavbar";
 import Container from "react-bootstrap/esm/Container";
 import Row from "react-bootstrap/Row";
@@ -10,8 +10,9 @@ function Messages({ history }) {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
+    const options = { headers };
     const messageUrl = BASE_URL + "contacts";
-    fetch(messageUrl, FETCH_OPTIONS)
+    fetch(messageUrl, options)
       .then((res) => res.json())
       .then((j) => {
         console.log(j);
@@ -27,6 +28,8 @@ function Messages({ history }) {
           <AdminNavbar history={history} />
         </Col>
         <Col>
+          <h1>Messages</h1>
+          <hr />
           {messages &&
             messages.map(({ name, email, message, createdAt, id }) => {
               return (

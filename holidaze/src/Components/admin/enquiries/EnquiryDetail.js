@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../../Api";
+import { BASE_URL, headers } from "../../../Api";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import DeleteEstablishments from "../DeleteEstablishments";
@@ -9,10 +9,10 @@ function EnquiriesDetails({ match }) {
 
   let historyPath = "/admin/dashboard/enquiries";
   let deletePath = "enquiries/";
-
   useEffect(() => {
+    const options = { headers };
     const hotelUrl = BASE_URL + "enquiries";
-    fetch(hotelUrl + `/${match.params.id}`, FETCH_OPTIONS)
+    fetch(hotelUrl + `/${match.params.id}`, options)
       .then((r) => r.json())
       .then((j) => setEnquiries(j))
       .catch((err) => console.log(err));

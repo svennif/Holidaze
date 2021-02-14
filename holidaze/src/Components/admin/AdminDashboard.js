@@ -8,12 +8,12 @@ import AdminCards from "./AdminCards";
 function AdminDashboard({ history }) {
   return (
     <>
-      <Container>
+      <Container className="admin__card">
         <Row className="text-center">
           <Col sm={12} md={12} lg={10}>
             <h1>Admin dashboard</h1>
             <hr />
-            <AdminCards/>
+            <AdminCards />
           </Col>
         </Row>
       </Container>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../../Api";
+import { BASE_URL, headers } from "../../../Api";
 import Button from "react-bootstrap/Button";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
@@ -36,11 +36,12 @@ function Establishments({ history }) {
 
   const onSubmit = (data) => {
     const establishmentUrl = BASE_URL + "establishments/";
+    const options = { headers };
 
-    FETCH_OPTIONS.method = "POST";
-    FETCH_OPTIONS.body = JSON.stringify(data);
+    options.method = "POST";
+    options.body = JSON.stringify(data);
 
-    fetch(establishmentUrl, FETCH_OPTIONS)
+    fetch(establishmentUrl, options)
       .then((r) => r.json())
       .then((j) => console.log(j))
       .catch((err) => console.log(err));
@@ -68,6 +69,7 @@ function Establishments({ history }) {
           </Col>
           <Col sm={10}>
             <h1>Add a new hotel: </h1>
+            <hr />
             <Form onSubmit={handleSubmit(onSubmit)}>
               <p className="success" style={{ color: "Green" }}></p>
               <FormGroup>

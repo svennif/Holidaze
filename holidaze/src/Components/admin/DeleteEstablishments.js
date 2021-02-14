@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { BASE_URL, FETCH_OPTIONS, DELETE } from "../../Api";
+import { BASE_URL, headers, DELETE } from "../../Api";
 import { FaTrashAlt } from "react-icons/fa";
 
 function DeleteEstablishments({ id, deletePath, historyPath }) {
@@ -14,10 +14,11 @@ function DeleteEstablishments({ id, deletePath, historyPath }) {
 
   async function deleteHotel() {
     const url = BASE_URL + deletePath + id;
+    const options = { headers };
 
-    FETCH_OPTIONS.method = DELETE;
 
-    await fetch(url, FETCH_OPTIONS);
+    options.method = DELETE;
+    await fetch(url, options);
 
     window.location.assign(historyPath);
   }

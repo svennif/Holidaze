@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../../Api";
+import { BASE_URL, headers } from "../../../Api";
 import AdminHotelCards from "./AdminHotelCards";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,9 +12,10 @@ function AdminHotels({ history }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const options = { headers };
     const url = BASE_URL + "establishments";
 
-    fetch(url, FETCH_OPTIONS)
+    fetch(url, options)
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
@@ -40,6 +41,7 @@ function AdminHotels({ history }) {
         </Col>
         <Col sm={12} md={12} lg={10}>
           <h1> Select a hotel to update</h1>
+          <hr />
           {hotels &&
             hotels.map((hotel) => {
               const { id, name, image, price, maxGuests, description } = hotel;

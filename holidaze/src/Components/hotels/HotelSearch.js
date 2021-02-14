@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import { BASE_URL, headers } from "../../Api";
 import SearchForm from "../hotels/SearchForm";
 import Container from "react-bootstrap/Container";
 import Spinner from "react-bootstrap/Spinner";
@@ -17,9 +17,11 @@ function HotelSearch() {
   const [display, setDisplay] = useState(false);
   const wrapperRef = useRef(null);
 
+  
   useEffect(() => {
+    const options = { headers };
     const url = BASE_URL + "establishments";
-    fetch(url, FETCH_OPTIONS)
+    fetch(url, options)
       .then((res) => res.json())
       .then((json) => {
         setHotel(json);

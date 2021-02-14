@@ -8,7 +8,7 @@ import FormControl from "react-bootstrap/FormControl";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { BASE_URL, FETCH_OPTIONS } from "../../Api";
+import { BASE_URL, headers } from "../../Api";
 
 const schema = yup.object().shape({
   name: yup.string().required("Please enter your full name"),
@@ -18,27 +18,32 @@ const schema = yup.object().shape({
   checkOut: yup.date().required(),
 });
 
-function EnquiryModal({ hotel }) {
+function EnquiryModal({ hotel, id }) {
   const { register, handleSubmit, errors } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data) => {
-    const modalUrl = BASE_URL + "enquiries";
+    const url = BASE_URL + "enquiries";
+    const options = { headers };
 
-    FETCH_OPTIONS.method = "POST";
-    FETCH_OPTIONS.body = JSON.stringify(data);
+    options.method = "POST";
+    options.body = JSON.stringify(data);
 
-    fetch(modalUrl, FETCH_OPTIONS)
-      .then((r) => r.json())
-      .then((j) => console.log(j));
+    fetch(url, options)
+      .then((res) => res.json())
+      .then((data) => console.log(data));
 
-    console.log("Success!");
+    document
+      .querySelector(".success")
+      .append("Success! Your message has been sent!");
   };
 
   return (
     <>
       <h2 className="hotelEnquiry">Send us an enquiry</h2>
+      <p className="success" style={{ color: "Green" }}></p>
+
       <Form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
           <FormLabel>Name: </FormLabel>
