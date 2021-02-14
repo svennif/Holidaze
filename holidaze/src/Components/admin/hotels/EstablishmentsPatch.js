@@ -29,11 +29,12 @@ function EstablishmentsPatch() {
 
   async function onSubmit(data) {
     console.log("data", data);
+    const options = { headers };
 
-    headers.method = PATCH;
-    headers.body = JSON.stringify(data);
+    options.method = PATCH;
+    options.body = JSON.stringify(data);
 
-    await fetch(BASE_URL + "establishments/" + id, headers);
+    await fetch(BASE_URL + "establishments/" + id, options);
 
     window.location.assign("/admin/dashboard/establishments/update");
   }
