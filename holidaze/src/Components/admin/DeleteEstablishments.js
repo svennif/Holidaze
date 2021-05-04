@@ -16,6 +16,7 @@ function DeleteEstablishments({ id, deletePath, historyPath }) {
     const url = BASE_URL + deletePath + id;
     const options = { headers };
 
+
     options.method = DELETE;
     await fetch(url, options);
 
