@@ -88,8 +88,8 @@ function App() {
             component={MessagesDetails}
           />
           <Route path="/contact" component={Contact} />
-          <Route path="/" exact component={Home} />
-          <Redirect to="/" />
+          <Route path="/holidaze" exact component={Home} />
+          <Redirect to="/holidaze" />
         </Switch>
       </Router>
     </AuthContextProvider>
